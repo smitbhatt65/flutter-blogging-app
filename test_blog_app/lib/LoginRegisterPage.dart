@@ -58,7 +58,7 @@ void validateAndSubmit() async
       if(_formType == FormType.login)
       {
         String userId = await widget.auth.SignIn(_email,_password);
-       // dialogBox.information(context, "Congratulations ", "Your are logged in successfully");
+        dialogBox.information(context, "Congratulations ", "Your are logged in successfully");
         print("login userId="+userId);
       }
       else{

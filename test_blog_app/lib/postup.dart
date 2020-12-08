@@ -1,65 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:test_blog_app/postup.dart';
-import 'Authentication.dart';
-import 'PhotoUpload.dart';
-import 'Posts.dart';
+import 'HomePage.dart';
+import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
+class PostUp extends StatefulWidget {
+  final String image;
+  final String description;
+  final String date;
+  final String time;
 
-class HomePage extends StatefulWidget {
-  HomePage
-  ({
-    this.auth,
-    this.onSignedOut,
-  });
-  final AuthImplementation auth;
-  final VoidCallback onSignedOut;
+  PostUp(this.image,this.description,this.date,this.time);  
 
+  _PostUpState createState() => _PostUpState();
 
-  @override
-  _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  List<Posts> postsList = [];
+class _PostUpState extends State<PostUp> {
+/*  final String image;
+  final String description;
+  final String date;
+  final String time;
 
-  @override
-  void initState() {
-    
-    super.initState();
+  _PostUpState({this.image,this.description,this.date,this.time});*/
 
-    DatabaseReference postsRef = FirebaseDatabase.instance.reference().child("Posts");
-
-    postsRef.once().then((DataSnapshot snap)
-    {
-      var KEYS = snap.value.keys;
-      var DATA = snap.value;
-
-      postsList.clear();
-
-      for(var individualKey in KEYS)
-      {
-        Posts posts = new Posts
-        (
-          DATA[individualKey]['image'],
-          DATA[individualKey]['description'],
-          DATA[individualKey]['date'],
-          DATA[individualKey]['time'],
-
-        );
-
-        postsList.add(posts);
-      }
-      setState(() {
-        print('Length : $postsList.length');
-      });
-    }
-    );
-
+  void printer()  {
+    var a = widget.image;
+    var b = widget.description;
+    var c = widget.date;
+    var d = widget.time;
+    print(" image = $a\ndescription = $b\ndate = $c\ntime  = $d");
+    //print(" image = $widget.image\ndescription = $widget.description\ndate = $widget.date\ntime  = $widget.time");
   }
 
-  void gotoPostEx()
-  {
+  void goToHomePage()
+{
   Navigator.push
   (context,
    MaterialPageRoute(builder: (context)
@@ -69,43 +44,22 @@ class _HomePageState extends State<HomePage> {
    }
    )
    );
-  }
-
-//method
-
-void _logoutUser() async
-{
-try
-{
-await widget.auth.signOut();
-widget.onSignedOut();
-}
-catch(e)
-{
-  print(e.toString());
-
-}
 }
 
-  @override
   Widget build(BuildContext context) {
     return new Scaffold
     (
       appBar: new AppBar
       ( centerTitle: true,
-        title: new Text("Blog App"),
+        title: new Text("Blog Viewer"),    
         
       ),
       body: new Container
       (
-        child: postsList.length == 0 ? new Text('No Blog available') : new ListView.builder
-        ( itemCount: postsList.length,
-          itemBuilder: (_,index)
-          {
-            return PostsUI(postsList[index].image, postsList[index].description, postsList[index].date, postsList[index].time);
             
-          },
-          ),
+        child:// show image and complete text here
+        
+        PostsUI(widget.image, widget.description, widget.date, widget.time),
           
       ),
       
@@ -129,7 +83,8 @@ catch(e)
               iconSize: 50,
               color: Colors.white,
 
-              onPressed: _logoutUser,
+              onPressed: goToHomePage,
+              
             ),
             // new IconButton
             // (
@@ -145,18 +100,8 @@ catch(e)
               iconSize: 50,
               color: Colors.white,
 
-              onPressed: ()
-              {
-                Navigator.push
-                (
-                  context,
-                  MaterialPageRoute(builder: (context)
-                  {
-                    return new UploadPhotoPage();
-
-                  })
-                  );
-
+              onPressed: (){
+ 
               },
             ),             
           ]
@@ -164,8 +109,8 @@ catch(e)
         ),
       ),
     );
-  }
 
+  }
 
   Widget PostsUI(String image,String description,String date,String time)
   {
@@ -173,23 +118,9 @@ catch(e)
     (
       elevation: 10.0,
       margin: EdgeInsets.all(15.0),
-      
-      child: new GestureDetector(
-        onTap: (){ print("1 $image");
-                Navigator.push
-                (
-                  context,
-                  MaterialPageRoute(builder: (context)
-                  {
-                    return new PostUp(image,description,date,time);//(image,description,date,time);
-                  
-                  })
-                  );
-                  print("2 ");
 
-        },
-        child: new Container
-        (
+      child: new Container
+      (
         padding: new EdgeInsets.all(14.0),
         child: new Column
         (
@@ -232,10 +163,9 @@ catch(e)
            ],
         ),
       ),
-      )      
-
 
     );
   }
+
 
 }
