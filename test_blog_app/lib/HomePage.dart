@@ -102,7 +102,15 @@ catch(e)
         ( itemCount: postsList.length,
           itemBuilder: (_,index)
           {
+                        if(postsList[index].description.length < 60)
+            {
             return PostsUI(postsList[index].image, postsList[index].description, postsList[index].date, postsList[index].time);
+            }
+            else
+            {
+              return PostsUI(postsList[index].image, postsList[index].description.substring(0,60) + '...', postsList[index].date, postsList[index].time);
+              
+            }
             
           },
           ),
