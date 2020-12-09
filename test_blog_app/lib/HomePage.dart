@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:test_blog_app/postup.dart';
 import 'Authentication.dart';
 import 'PhotoUpload.dart';
 import 'Posts.dart';
+import 'postup.dart';
 import 'package:firebase_database/firebase_database.dart';
-
 
 class HomePage extends StatefulWidget {
   HomePage
@@ -58,18 +57,7 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-  void gotoPostEx()
-  {
-  Navigator.push
-  (context,
-   MaterialPageRoute(builder: (context)
-   {
-     return new HomePage();
 
-   }
-   )
-   );
-  }
 
 //method
 
@@ -102,19 +90,13 @@ catch(e)
         ( itemCount: postsList.length,
           itemBuilder: (_,index)
           {
-                        if(postsList[index].description.length < 60)
-            {
             return PostsUI(postsList[index].image, postsList[index].description, postsList[index].date, postsList[index].time);
-            }
-            else
-            {
-              return PostsUI(postsList[index].image, postsList[index].description.substring(0,60) + '...', postsList[index].date, postsList[index].time);
-              
-            }
-            
+
           },
           ),
           
+        
+
       ),
       
       bottomNavigationBar: new BottomAppBar
@@ -176,7 +158,8 @@ catch(e)
 
 
   Widget PostsUI(String image,String description,String date,String time)
-  {
+  { //var flag = true;
+  
     return new Card
     (
       elevation: 10.0,
@@ -233,7 +216,7 @@ catch(e)
 
               new Text
                   (
-                    description,
+                    description.length > 60 ? (description.substring(0,60) + "...") : description,
                     style: Theme.of(context).textTheme.subtitle1,
                     textAlign: TextAlign.center,
                   ),  
