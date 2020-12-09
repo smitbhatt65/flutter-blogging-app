@@ -21,7 +21,6 @@ class _PostUpState extends State<PostUp> {
   final String description;
   final String date;
   final String time;
-
   _PostUpState({this.image,this.description,this.date,this.time});*/
 
   void printer()  {
@@ -49,17 +48,20 @@ class _PostUpState extends State<PostUp> {
   Widget build(BuildContext context) {
     return new Scaffold
     (
+      //resizeToAvoidBottomPadding: true,
       appBar: new AppBar
       ( centerTitle: true,
         title: new Text("Blog Viewer"),    
         
       ),
-      body: new Container
+      body: new SingleChildScrollView
       (
             
-        child:// show image and complete text here
+        child: // show image and complete text here
         
-        PostsUI(widget.image, widget.description, widget.date, widget.time),
+         PostsUI(widget.image, widget.description, widget.date, widget.time),
+        
+        
           
       ),
       
