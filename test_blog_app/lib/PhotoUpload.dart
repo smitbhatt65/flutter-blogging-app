@@ -23,12 +23,17 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
 
   Future getImage() async
   {
-    var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    //var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final _picker = ImagePicker();
+    	
+    PickedFile tempImage = await _picker.getImage(source: ImageSource.gallery);
+    final File file = File(tempImage.path);
 
     setState(() {
-      sampleImage = tempImage;
+      sampleImage = file;
     });
   }
+
 
   bool validateAndSave()
   {
