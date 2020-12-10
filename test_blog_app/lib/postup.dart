@@ -3,8 +3,12 @@ import 'HomePage.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'Authentication.dart';
 
 class PostUp extends StatefulWidget {
+ 
+  //final AuthImplementation auth;
+  //final VoidCallback onSignedOut;
   final String image;
   final String description;
   final String date;
@@ -24,14 +28,6 @@ class _PostUpState extends State<PostUp> {
 
   _PostUpState({this.image,this.description,this.date,this.time});*/
 
-  void printer()  {
-    var a = widget.image;
-    var b = widget.description;
-    var c = widget.date;
-    var d = widget.time;
-    print(" image = $a\ndescription = $b\ndate = $c\ntime  = $d");
-    //print(" image = $widget.image\ndescription = $widget.description\ndate = $widget.date\ntime  = $widget.time");
-  }
 
   void goToHomePage()
 {
